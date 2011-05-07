@@ -4,3 +4,6 @@
 [submodule "bundle/slimv"]
 	path = bundle/slimv
 	url = http://github.com/vim-scripts/slimv.vim.git
+[submodule "bundle/genutils"]
+	path = bundle/genutils
+	url = http://github.com/vim-scripts/genutils.git
