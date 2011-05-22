@@ -1,14 +1,16 @@
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-colorscheme dusk 
-set guifont=Lucida_Console:h10
+set nocompatible
+
 set tabstop=4
 nnoremap <esc> :noh<return><esc>
 map <F9> :cprev<CR>
 map <F10> :cnext<CR>
 map <F11> :clist<CR>
 set tags=c:\dev\zenic\main\tags
+
+colorscheme dusk
 
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 

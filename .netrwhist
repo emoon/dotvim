@@ -1,9 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='C:/Program Files (x86)/vim/vim73'
-let g:netrw_dirhist_2='C:/Program Files (x86)/vim'
-let g:netrw_dirhist_3='C:/Program Files (x86)'
-let g:netrw_dirhist_4='C:'
-let g:netrw_dirhist_5='C:/Users'
-let g:netrw_dirhist_6='C:/Users/emoon'
-let g:netrw_dirhist_7='C:/Users/emoon/vimfiles'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/daniel'
+let g:netrw_dirhist_2='/Users/daniel/.vim'
