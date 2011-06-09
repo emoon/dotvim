@@ -11,6 +11,7 @@ map <F11> :clist<CR>
 set tags=c:\dev\zenic\main\tags
 
 colorscheme dusk
+set guioptions=-t 
 
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 
