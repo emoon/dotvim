@@ -13,6 +13,11 @@ set tags=c:\dev\zenic\main\tags
 colorscheme dusk
 set guioptions=-t 
 
+let g:solarized_contrast="high"
+syntax enable
+set background=dark
+colorscheme solarized
+
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 
 set nowrap        " don't wrap lines
