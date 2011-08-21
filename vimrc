@@ -48,13 +48,16 @@ set noerrorbells         " don't beep
 set nobackup
 set noswapfile
 
-nnoremap ; :
+autocmd FileType lisp set tabstop=2|set shiftwidth=2
 
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+" auto-change directory to current buffer
+autocmd BufEnter * :cd %:p:h
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
