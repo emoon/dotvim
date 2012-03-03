@@ -22,9 +22,6 @@
 [submodule "bundle/cocoa"]
 	path = bundle/cocoa
 	url = https://github.com/msanders/cocoa.vim
-[submodule "ctrlp"]
-	path = ctrlp
-	url = https://github.com/kien/ctrlp.vim
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim

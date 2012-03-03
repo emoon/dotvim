@@ -5,18 +5,32 @@ set nocompatible
 
 set tabstop=4
 nnoremap <esc> :noh<return><esc>
-map <F9> :cprev<CR>
-map <F10> :cnext<CR>
-map <F11> :clist<CR>
-set tags=c:\dev\zenic\main\tags
 
-colorscheme dusk
+function! s:QuickMake()
+	let format = &errorformat	" capture current local efm
+	:wall
+	:silent!make
+	let &efm=format " transfer error format to quickfix buffer
+endfunction
+
+command! -nargs=0 QuickMake :call s:QuickMake()
+
+" nmap <F7> :make<CR>
+nmap <F7> :QuickMake<CR>
+
+" Use F8/F9 to jump between errors in the quickfix window
+nmap <F8> :cnext<CR>
+nmap <F9> :cprev<CR>
+map <F10> :clist<CR>
+map <F5> :!/path/to/exe<CR><ESC>
+
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set laststatus=2
+
 set guioptions=-t 
 
-let g:solarized_contrast="high"
 syntax enable
-set background=dark
-colorscheme solarized
+colorscheme dusk 
 
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 
@@ -48,7 +62,13 @@ set noerrorbells         " don't beep
 set nobackup
 set noswapfile
 
-autocmd FileType lisp set tabstop=2|set shiftwidth=2
+set guifont=ProggyClean:h11
+set noanti
+set linespace=2
+
+autocmd FileType lisp set tabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType c set tabstop=4|set shiftwidth=4
+autocmd FileType objc set tabstop=4|set shiftwidth=4
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -57,9 +77,12 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " auto-change directory to current buffer
-autocmd BufEnter * :cd %:p:h
+" autocmd BufEnter * :cd %:p:h
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+command! -nargs=+ Calc :py print <args>
+py from math import *
 
