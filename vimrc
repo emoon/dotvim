@@ -22,7 +22,8 @@ nmap <F7> :QuickMake<CR>
 nmap <F8> :cnext<CR>
 nmap <F9> :cprev<CR>
 map <F10> :clist<CR>
-map <F5> :!/path/to/exe<CR><ESC>
+map <F5> :!/Users/daniel/code/amiga/tbl-newage/tundra-output/macosx-gcc-debug-default/NecrosisTest<CR><ESC>
+set makeprg=tundra\ macosx-gcc-debug
 
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
@@ -85,4 +86,11 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 command! -nargs=+ Calc :py print <args>
 py from math import *
+
+set tags=~/code/amiga/tbl-newage/tags
+cd ~/code/amiga/tbl-newage
+
+" Ruby stuff
+autocmd FileType ruby compiler ruby
+
 
