@@ -30,6 +30,9 @@ set laststatus=2
 
 set guioptions=-t 
 
+" Nicer completion 
+set completeopt=menu,preview,longest  
+
 syntax enable
 colorscheme dusk 
 
@@ -92,5 +95,8 @@ cd ~/code/amiga/tbl-newage
 
 " Ruby stuff
 autocmd FileType ruby compiler ruby
+
+let g:SuperTabDefaultCompletionType = "context" 
+
 
 
