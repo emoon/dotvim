@@ -38,6 +38,7 @@ colorscheme dusk
 
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 
+let mapleader = ","
 set nowrap        " don't wrap lines
 set tabstop=4     " a tab is four spaces
 set backspace=indent,eol,start
@@ -84,14 +85,52 @@ map <C-l> <C-w>l
 " autocmd BufEnter * :cd %:p:h
 
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>ev :e ~/.vim/vimrc<CR>
+nmap <silent> <leader>sv :so ~/.vim/vimrc<CR>
 
 command! -nargs=+ Calc :py print <args>
 py from math import *
 
+
 set tags=~/code/amiga/tbl-newage/tags
 cd ~/code/amiga/tbl-newage
+
+" disable <F1>-Helpkey and map it to <ESC>
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+map <C-h> :nohl<cr>
+imap <C-l> :<Space>
+map <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+map <C-t> <esc>:tabnew<CR>
+map <C-x> <C-w>c
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+
+"-------------------------------------------------------------------------------
+"-                               Autocomplete settings                         -
+"-------------------------------------------------------------------------------
+
+set tags=tags;/             " enable ctags search recursively up the directories
+set tags+=~/.vim/tags/cpp   " include std:: tags
+set tags+=~/.vim/tags/gtkmm " include gtkmm tags
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1      " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1    " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1    " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
 
 " Ruby stuff
 autocmd FileType ruby compiler ruby
