@@ -102,6 +102,7 @@ vnoremap <F1> <ESC>
 
 map <C-h> :nohl<cr>
 imap <C-l> :<Space>
+imap <C-n> <tab>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
 map <C-t> <esc>:tabnew<CR>
