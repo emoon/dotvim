@@ -1,24 +1,41 @@
  set nocompatible               " be iMproved
  filetype off                   " required!
+ filetype plugin on
 
  set rtp+=~/.vim/bundle/vundle/
  call vundle#rc()
 
  " let Vundle manage Vundle
- " required! 
-Bundle 'gmarik/vundle'
+ " required!
+Bundle 'Chiel92/vim-autoformat'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'scrooloose/syntastic'
-Bundle 'kien/ctrlp.vim'
-Bundle 'vim-scripts/a.vim'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-dispatch'
-Bundle 'rking/ag.vim'
-Bundle 'scrooloose/nerdtree.git'
-Bundle 'rizzatti/funcoo.vim'
+Bundle 'Valloric/YouCompleteMe.git'
+Bundle 'beyondmarc/hlsl.vim'
+" Bundle 'bling/vim-airline'
+Bundle 'gmarik/vundle'
+Bundle 'gryf/kickass-syntax-vim'
+Bundle 'jkozdon/vim-ispc'
+Bundle 'jremmen/vim-ripgrep'
+Bundle 'junegunn/fzf'
+Bundle 'junegunn/fzf.vim'
+Bundle 'petRUShka/vim-opencl.git'
+Bundle 'rhysd/vim-clang-format'
 Bundle 'rizzatti/dash.vim'
-Bundle 'tikhomirov/vim-glsl'
-Bundle 'kovisoft/slimv'
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rking/ag.vim'
+Bundle 'rust-lang/rust.vim'
+Bundle 'scrooloose/nerdtree.git'
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-dispatch'
+" Bundle 'vim-airline/vim-airline-themes'
+Bundle 'vim-scripts/a.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
+Bundle 'leafgarland/typescript-vim'
+
+" export FZF_DEFAULT_COMMAND="rg --files"
+"
+
+set clipboard=unnamed
 
 set tabstop=4
 nnoremap <esc> :noh<return><esc>
@@ -30,30 +47,39 @@ function! s:QuickMake()
 	let &efm=format " transfer error format to quickfix buffer
 endfunction
 
+
+" RustFmt stuff
+let g:formatdef_rustfmt = '"/Users/danielcollin/.cargo/bin/rustfmt"'
+let g:formatters_rust = ['rustfmt']
+
+let g:ycm_rust_src_path = '/Users/danielcollin/code/other/rust/src'
+
+let g:rustfmt_command = "cargo fmt -- "
+let g:autoformat_verbosemode=1
+
 command! -nargs=0 QuickMake :call s:QuickMake()
 
 " nmap <F7> :make<CR>
 nmap <F7> :QuickMake<CR>
 
+" Use ripgrep to find the word under the cursor
+nnoremap gr :grep <cword> *<CR>
+
 " Use F8/F9 to jump between errors in the quickfix window
 nmap <F8> :cnext<CR>
 nmap <F9> :cprev<CR>
 map <F10> :clist<CR>
-map <F4> :!/Users/daniel/code/rocket/ogl_editor/tundra-output/macosx-clang-debug-default/RocketEditor.app/Contents/MacOS/editor<CR><ESC>
-" map <F5> :!open /Users/daniel/code/rocket/ogg_editor/tundra-output/macosx-clang-debug-default/RocketEditor.app<CR><ESC>
-" map <F4> :!/Users/danielcollin/code/amiga/tbl-newage/tundra-output/macosxm32-clang-debug-default/HCLitePlayer<CR><ESC>
-" map <F5> :!/Users/daniel/code/amiga/tbl-newage/tundra-output/macosx-clang-debug-default/HCLiteConverter<CR><ESC>
-set makeprg=tundra2\ macosx-clang-debug\ amiga-vbccosx-debug
+map <F4> :!/Users/danielcollin/code/ProDBG/t2-output/macosx-clang-debug-default/ProDBG.app/Contents/MacOS/prodbg<CR><ESC>
+set makeprg=scripts/mac_build_debug.sh
 
 set laststatus=2
 
-set guioptions=-t 
+set guioptions=-t
 
 syntax enable
-" colorscheme dusk 
 colorscheme distinguished
 
-au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
+au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fs setf glsl
 
 let mapleader = ","
 set nowrap        " don't wrap lines
@@ -84,17 +110,28 @@ set noerrorbells         " don't beep
 set nobackup
 set noswapfile
 
-set guifont=ProggySquare:h11
+" set guifont=ProggySquare:h11
+set guifont=EssentialPragmataPro:h15
 set noanti
 set linespace=2
 
 nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <Leader>f :Autoformat<CR>
+" nmap <c-r> :Files<CR>
 
-autocmd FileType lisp set tabstop=2|set shiftwidth=2|set expandtab
-autocmd FileType c set tabstop=4|set shiftwidth=4
+" autocmd FileType lisp set tabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType c set tabstop=4|set shiftwidth=4|set noexpandtab
+autocmd FileType cpp set tabstop=4|set shiftwidth=4|set expandtab
 autocmd FileType objc set tabstop=4|set shiftwidth=4
-autocmd FileType asm set tabstop=8|set shiftwidth=8
-autocmd FileType s set tabstop=8|set shiftwidth=8 expandtab
+autocmd FileType asm set tabstop=8|set shiftwidth=8|set noexpandtab
+autocmd FileType s set tabstop=8|set shiftwidth=8|set noexpandtab
+autocmd FileType rs set tabstop=4|set shiftwidth=4
+autocmd FileType sl set tabstop=8|set shiftwidth=8|set noexpandtab
+autocmd BufNewFile,BufRead *.sl set syntax=asm68k
+autocmd BufNewFile,BufRead *.s set syntax=asm68k
+autocmd BufNewFile,BufRead *.i set syntax=asm68k
+autocmd FileType rust compiler cargo
+"autocmd FileType rust setl makeprg=cargo\ build
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -102,7 +139,8 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-nnoremap S diw"0P
+" nnoremap S "_diwP
+nnoremap S "_ciw<C-r>*<Esc>
 
 " auto-change directory to current buffer
 " autocmd BufEnter * :cd %:p:h
@@ -114,8 +152,9 @@ nmap <silent> <leader>sv :so ~/.vim/vimrc<CR>
 command! -nargs=+ Calc :py print <args>
 py from math import *
 
-set tags=~/code/amiga/tbl-newage/tags
-cd ~/code/amiga/tbl-newage
+" set tags=~/code/prodbg/tags
+" cd ~/code/prodbg/
+" set makeprg=scripts/mac_build_debug.sh
 
 " disable <F1>-Helpkey and map it to <ESC>
 inoremap <F1> <ESC>
@@ -124,14 +163,29 @@ vnoremap <F1> <ESC>
 let g:ctrlp_map = '<c-r>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:airline_theme="wombat"
+let g:airline_powerline_fonts = 1
 
-" map <C-h> :nohl<cr>
-" imap <C-l> :<Space>
-" imap <C-n> <tab>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
-" map <C-x> <C-w>c
-" map <C-n> :cn<CR>
-" map <C-p> :cp<CR>
 
+let g:ycm_always_populate_location_list = 1
 
+" Trim traling whitesspaces
+
+fun! TrimWhitespace()
+    let l:save_cursor = getpos('.')
+    %s/\s\+$//e
+    call setpos('.', l:save_cursor)
+endfun
+
+" let g:ctrlp_custom_ignore = '\v\.(lock)$'
+
+" Remove trating whitespaces on save
+
+autocmd BufWritePre * :call TrimWhitespace()
+
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
